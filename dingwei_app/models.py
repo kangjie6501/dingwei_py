@@ -11,9 +11,9 @@ class Person(models.Model):
 
 class Attention(models.Model):
     userId = models.CharField(max_length=32)
-    userName = models.CharField(max_length=30)
+#    userName = models.CharField(max_length=30)
     targetUserId = models.CharField(max_length=32)
-    targetUserName = models.CharField(max_length=30)
+#    targetUserName = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.userName + '++'+self.targetUserName
+        return self.userId + '++'+self.targetUserId
