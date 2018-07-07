@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from dingwei_app import views as learn_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+ #   path('admin/', admin.site.urls),
+  #  path('',learn_views.index,),
+   # path('admin/',admin.site.urls),
+    path('',learn_views.home,name='home'),
 ]

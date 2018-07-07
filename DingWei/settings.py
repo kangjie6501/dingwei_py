@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "dingwei_app",
+    'dingwei_app',
 ]
 
 MIDDLEWARE = [
