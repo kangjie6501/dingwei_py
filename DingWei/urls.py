@@ -23,4 +23,5 @@ urlpatterns = [
    # path('admin/',admin.site.urls),
     path('',learn_views.home,name='home'),
     path('persons/',learn_views.persons),
+    path('add_person',learn_views.add_person),
 ]

@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from dingwei_app import models
+from dingwei_app.models import Person
 
 
 def index(request):
@@ -15,3 +16,16 @@ def home(request):
 def persons(request):
     person_list = models.Person.objects.all()
     return render(request,"persons.html",{'person_list':person_list})
+def add_person(request):
+    response = {'status':True,'message':None}
+    print(request.POST)
+    try:
+        n = request.POST.get('name')
+        p = request.POST.get('passWord')
+        ph = request.POST.get('phone')
+        Person.objects.create(name=n,phone=ph,passWord=p)
+    except Exception as e:
+        response['status'] = False
+        response['message'] = '用户输入错误'
+
+    return HttpResponse('OK')
