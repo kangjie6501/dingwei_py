@@ -21,9 +21,8 @@ def add_person(request):
     print(request.POST)
     try:
         n = request.POST.get('name')
-        p = request.POST.get('passWord')
         ph = request.POST.get('phone')
-        Person.objects.create(name=n,phone=ph,passWord=p)
+        Person.objects.create(name=n,phone=ph)
     except Exception as e:
         response['status'] = False
         response['message'] = '用户输入错误'
