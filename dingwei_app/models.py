@@ -10,10 +10,20 @@ class Person(models.Model):
         return self.name
 
 class Attention(models.Model):
-    userId = models.CharField(max_length=32)
-#    userName = models.CharField(max_length=30)
-    targetUserId = models.CharField(max_length=32)
-#    targetUserName = models.CharField(max_length=30)
 
+    userId = models.CharField(max_length=32)
+    targetUserId = models.CharField(max_length=32)
     def __str__(self):
         return self.userId + '++'+self.targetUserId
+
+class Location(models.Model):
+    #用户id
+    person = models.ForeignKey(Person,on_delete=models.CASCADE,)
+    #时间
+    time = models.CharField(max_length=30)
+    #经度
+    jing = models.CharField(max_length=30)
+    #纬度
+    wei = models.CharField(max_length=30)
+    def __str__(self):
+        return self.jing +""+ self.wei

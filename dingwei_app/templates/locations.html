@@ -23,19 +23,19 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>name</th>
-                <th>passWord</th>
+                <th>jing</th>
+                <th>wei</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
 
 
-            {% for row in person_list %}
+            {% for row in lication_list %}
             <tr>
                 <td>{{row.id}}</td>
-                <td>{{row.name}}</td>
-                <td>{{row.passWord}}</td>
+                <td>{{row.jing}}</td>
+                <td>{{row.wei}}</td>name
                 <td>
                     <a class="fa fa-close icon"></a>
                     <a class="fa fa-edit icon"></a>
@@ -55,33 +55,21 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加用户</h4>
+                <h4 class="modal-title" id="myModalLabel">添加位置</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">name</label>
+                        <label class="col-sm-2 control-label">jing</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="name" placeholder="name">
+                            <input type="text" class="form-control" name="jing" placeholder="jing">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">phone</label>
+                        <label class="col-sm-2 control-label">wei</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" name="phone" placeholder="pnone">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">gender</label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" value="1"> 男
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" value="2"> 女
-                            </label>
+                            <input type="number" class="form-control" name="wei" placeholder="wei">
                         </div>
                     </div>
                 </form>
@@ -115,19 +103,14 @@
           $('#addModal').find('input,select').each(function(){
               var v = $(this).val();
               var n = $(this).attr('name');
-              if(n == 'gender'){
-                  if($(this).prop('checked')){
-                     postData[n] = v;
-                   }
-              }else{
                   postData[n] = v;
-              }
+
 
           });
 
           console.log(postData);
               $.ajax({
-                  url:'/add_person',
+                  url:'/add_location',
                   type:'POST',
                   data:postData,
                   success:function(arg){
