@@ -22,6 +22,7 @@ urlpatterns = [
   #  path('',learn_views.index,),
    # path('admin/',admin.site.urls),
     path('',learn_views.home,name='home'),
+    path('login/', learn_views.login),
     path('persons/',learn_views.persons),
     path('add_person',learn_views.add_person),
     path('locations/',learn_views.locations),

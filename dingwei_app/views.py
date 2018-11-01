@@ -7,6 +7,7 @@ from django.http import HttpResponse
 
 from dingwei_app import models
 from dingwei_app.models import Person, Location
+from dss.Serializer import serializer
 
 
 def index(request):
@@ -44,3 +45,35 @@ def add_location(request):
         response['message'] = '用户输入错误'
 
     return HttpResponse('OK')
+
+def response_as_json(data, foreign_penetrate=False):
+    jsonString = serializer(data=data, output_type="json", foreign=foreign_penetrate)
+    response = HttpResponse(
+            # json.dumps(dataa, cls=MyEncoder),
+            jsonString,
+            content_type="application/json",
+    )
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
+
+
+def login(request):
+    response = {'status':True,'message':None}
+    print(request.GET)
+    try:
+        j = request.GET.get('phone')
+        w = request.GET.get('password')
+        p = Person.objects.filter(phone__exact=j).filter(passWord__exact=w)
+        if p.len == 0 :
+            '''找不到用户'''
+
+        else:
+            '''找到用户'''
+
+
+    except Exception as e:
+        response['status'] = False
+        response['message'] = '用户输入错误'
+
+    return HttpResponse(j+w)
+
