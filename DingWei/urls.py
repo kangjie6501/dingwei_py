@@ -27,5 +27,6 @@ urlpatterns = [
     path('persons/',learn_views.persons),
   #  path('add_person',learn_views.add_person),
     path('locations/',learn_views.locations),
-    path('add_location',learn_views.add_location),
+    path('addLocation/',learn_views.add_location),
+    path('d/', learn_views.file_down),
 ]

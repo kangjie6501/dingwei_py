@@ -37,17 +37,25 @@ def locations(request):
     return HttpResponse('OK')'''
 
 def add_location(request):
-    response = {'status':True,'message':None}
     print(request.POST)
+    msg = "成功"
+    code= 200
     try:
-        j = request.POST.get('jing')
-        w = request.POST.get('wei')
-        Location.objects.create(jing=j,wei=w)
-    except Exception as e:
-        response['status'] = False
-        response['message'] = '用户输入错误'
+        id = request.POST.get('userId')
+        locationJson = request.POST.get('location')
+        locationList = json.loads(locationJson)
 
-    return HttpResponse('OK')
+        person = Person.objects.get(id=int(id))
+        for location in locationList:
+            Location.objects.create(person=person, jing=location.jing, wei=location.wei, time=location.time)
+
+    except IOError as e:
+       msg = e
+       code = 500
+    data = ResponceData(code=code, msg=msg, data=None)
+    jsonString = json.dumps(data, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+    print(jsonString)
+    return HttpResponse(jsonString, content_type="application/json")
 
 '''def response_as_json(data):
 #    jsonString = serializer(data=data, output_type="json", foreign=foreign_penetrate)
@@ -119,4 +127,12 @@ def login(request):
         jsonString = json.dumps(data, default=lambda o: o.__dict__, sort_keys=True, indent=4)
     print(jsonString)
     return HttpResponse(jsonString, content_type="application/json")
+
+from django.http import FileResponse
+def file_down(request):
+    file=open('E:\\puti2018.4.9\\putiglobal\\app\\release\\app-release.apk','rb')
+    response =FileResponse(file)
+    response['Content-Type']='application/octet-stream'
+    response['Content-Disposition']='attachment;filename="app-release.apk"'
+    return response
 
