@@ -46,8 +46,8 @@ def add_location(request):
         locationList = json.loads(locationJson)
 
         person = Person.objects.get(id=int(id))
-        for location in locationList:
-            Location.objects.create(person=person, jing=location.jing, wei=location.wei, time=location.time)
+        for i in locationList:
+            Location.objects.create(person=person,jing=i['jing'], wei=i['wei'], time=i['time'])
 
     except IOError as e:
        msg = e
@@ -130,9 +130,9 @@ def login(request):
 
 from django.http import FileResponse
 def file_down(request):
-    file=open('E:\\puti2018.4.9\\putiglobal\\app\\release\\app-release.apk','rb')
+    file=open('E:\\puti2018.4.9\\putiglobal\\app\\release\\abc1.1.3.apk','rb')
     response =FileResponse(file)
     response['Content-Type']='application/octet-stream'
-    response['Content-Disposition']='attachment;filename="app-release.apk"'
+    response['Content-Disposition']='attachment;filename="abc1.1.3.apk"'
     return response
 
