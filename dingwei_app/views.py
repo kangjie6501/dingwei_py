@@ -176,3 +176,7 @@ def file_down(request):
     response['Content-Disposition']='attachment;filename="app-release.apk"'
     return response
 
+
+def clear_location(request):
+    Location.objects.all().delete()
+    return None
