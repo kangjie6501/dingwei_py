@@ -28,5 +28,8 @@ urlpatterns = [
   #  path('add_person',learn_views.add_person),
     path('locations/',learn_views.locations),
     path('addLocation/',learn_views.add_location),
+    #clearLocationByUserId/
+    path('clearLocationByUserId/', learn_views.add_location),
+    path('getLocationByUserId/',learn_views.get_location_by_user_id),
     path('d/', learn_views.file_down),
 ]
