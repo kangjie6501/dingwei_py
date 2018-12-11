@@ -5,11 +5,13 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 # from dss.Serializer import serializer
 import json
 from dingwei_app import models
-from dingwei_app.models import Person, Location
+from dingwei_app.models import Person, Location, Attention
+
+from django.db.models import Q
 import logging
 
 
@@ -95,7 +97,8 @@ class ResponceData():
 def register(request):
     ph = request.POST.get('phone')
     password = request.POST.get('password')
-    person = Person(phone=ph,name='name',password=password)
+    name = request.POST.get('name')
+    person = Person(phone=ph,name=name,password=password)
 #    Person.objects.create(phone=ph, passWord=password)
     person.save()
     data = ResponceData(code=200,msg="成功",data=person)
@@ -129,7 +132,6 @@ def login(request):
         data = ResponceData(code=500, msg="error", data=None)
         print(data)
         jsonString = json.dumps(data, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-    print(jsonString)
     return HttpResponse(jsonString, content_type="application/json")
 
 def get_location_by_user_id(request):
@@ -179,4 +181,49 @@ def file_down(request):
 
 def clear_location(request):
     Location.objects.all().delete()
-    return None
+    data = ResponceData(code=200, msg="成功", data=None)
+    jsonString = json.dumps(data, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+    return HttpResponse(jsonString, content_type="application/json")
+
+
+def add_attention(request):
+    id = request.POST.get('userId')
+    otherUserId = request.POST.get('otherUserId')
+    p = Person.objects.get(id=otherUserId)
+    if p :
+        #    Person.objects.create(phone=ph, passWord=password)
+        Attention.objects.create(user_id=id,target_user_id=otherUserId)
+
+
+        data = ResponceData(code=200, msg="成功", data=p)
+    else:
+        data = ResponceData(code=200, msg="无该用户", data=None)
+    jsonString = json.dumps(data, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+    return HttpResponse(jsonString, content_type="application/json")
+
+
+def get_attentions(request):
+    userId = request.POST.get('userId')
+    que = Attention.objects.filter(user_id=userId)
+    q1 = Q()
+    q1.connector = 'OR'
+
+    for att in que:  # 第一个实例
+
+        q1.children.append(('id',att.target_user_id))
+
+    persons = Person.objects.filter(q1).values('id','phone','name')
+    logging.getLogger("aa")
+    logging.debug(persons)
+    lis = list(persons)
+
+    li = []
+    for pp in persons:
+        li.append(pp)
+    l = {}
+    l['msg'] = 'success'
+    l['code'] = '200'
+    l['data'] = li
+
+    jsonString = json.dumps(l)
+    return HttpResponse( jsonString, content_type="application/json")

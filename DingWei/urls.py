@@ -31,5 +31,7 @@ urlpatterns = [
     #clearLocationByUserId/
     path('clearLocationByUserId/', learn_views.clear_location),
     path('getLocationByUserId/',learn_views.get_location_by_user_id),
+    path('addAttention/',learn_views.add_attention),
+    path('getAttentions/',learn_views.get_attentions),
     path('d/', learn_views.file_down),
 ]
