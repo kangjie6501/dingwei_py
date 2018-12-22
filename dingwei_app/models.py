@@ -25,6 +25,8 @@ class Location(models.Model):
     person = models.ForeignKey(Person,on_delete=models.CASCADE,)
     #时间
     time = models.CharField(max_length=30)
+    #时间格式成 20180101 方便筛选
+    time_day = models.CharField(max_length=30)
     #经度
     jing = models.CharField(max_length=30)
     #纬度

@@ -53,7 +53,7 @@ def add_location(request):
 
         for i in locationList:
             logging.info(person[0].id)
-            locat = Location(person=person[0],jing=i['jing'], wei=i['wei'], time=i['time'])
+            locat = Location(person=person[0],jing=i['jing'], wei=i['wei'], time=i['time'],time_day=i['timeDay'])
             locat.save()
     except IOError as e:
        msg = e
@@ -137,7 +137,8 @@ def login(request):
 def get_location_by_user_id(request):
     try:
         id = request.POST.get('userId')
-        lo = Location.objects.all().filter(person__id=id)
+        timeDay = request.POST.get('timeDay')
+        lo = Location.objects.all().filter(person__id=id,time_day=timeDay)
         if len(lo) == 0 :
             '''找不到用户'''
             data = ResponceData(code=200, msg="成功", data=None)
